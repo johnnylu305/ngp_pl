@@ -74,8 +74,8 @@ class BRICSDataset(BaseDataset):
                     pose_radius_scale = 1.5
             else:
                 c2w[:, 1:3] *= -1 # [right up back] to [right down front]
-                pose_radius_scale = 1.5
-            c2w[:, 3] /= np.linalg.norm(c2w[:, 3])/pose_radius_scale
+                #pose_radius_scale = 1.1 #1.5
+            #c2w[:, 3] /= np.linalg.norm(c2w[:, 3])/pose_radius_scale
             
             
             # add shift
@@ -94,9 +94,13 @@ class BRICSDataset(BaseDataset):
             except: pass
 
         # center pos to [0, 0, 0]
-        #for i in range(len(self.poses)):
-        #    self.poses[i][:, 3] -= pos/len(self.poses)
-        
+        # and bound it by [-0.5, 0.5]
+        for i in range(len(self.poses)):
+            self.poses[i][:, 3] -= np.array([-0.10901881, -0.06427684,  0.27593734])
+            #print(pos/len(self.poses))
+            self.poses[i][:, 3] /= 9.
+            #print(self.poses[i][:, 3])        
+       
         if len(self.rays)>0:
             self.rays = torch.FloatTensor(np.stack(self.rays)) # (N_images, hw, ?)
         self.poses = torch.FloatTensor(self.poses) # (N_images, 3, 4)
