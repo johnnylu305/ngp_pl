@@ -1,3 +1,4 @@
+from .brics import BRICSDataset
 from .nerf import NeRFDataset
 from .nsvf import NSVFDataset
 from .colmap import ColmapDataset
@@ -9,4 +10,5 @@ dataset_dict = {'nerf': NeRFDataset,
                 'nsvf': NSVFDataset,
                 'colmap': ColmapDataset,
                 'nerfpp': NeRFPPDataset,
-                'rtmv': RTMVDataset}
+                'rtmv': RTMVDataset,
+                'brics': BRICSDataset}
